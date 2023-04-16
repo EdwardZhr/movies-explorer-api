@@ -1,5 +1,6 @@
 # movies-explorer-api
 Бэкенд приложения movies-explorer
+https://api.edwardmovies.nomoredomains.monster/
 
 ## Директории
 
