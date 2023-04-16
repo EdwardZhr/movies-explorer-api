@@ -1,5 +1,5 @@
 # movies-explorer-api
-Бэкенд проекта приложения movies-explorer
+Бэкенд приложения movies-explorer
 
 ## Директории
 
