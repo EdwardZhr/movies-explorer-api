@@ -1,35 +1,30 @@
 const router = require('express').Router();
-const { celebrate, Joi } = require('celebrate');
 const NotFoundError = require('../errors/not-found-err');
+const { PageNotFoundMessage } = require('../utils/constants');
+
 const {
   createUser, login, clearCookie,
 } = require('../controllers/users');
+
+const {
+  createUserValidation, loginValidation,
+} = require('../utils/validation');
+
 const { auth } = require('../middlewares/auth');
 
-router.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    name: Joi.string().required().min(2).max(30),
-    password: Joi.string().required().min(8),
-  }),
-}), createUser);
+router.post('/signup', createUserValidation, createUser);
 
-router.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), login);
+router.post('/signin', loginValidation, login);
 
 router.use(auth);
+
+router.post('/signout', clearCookie);
 
 router.use('/users', require('./users'));
 router.use('/movies', require('./movies'));
 
-router.post('/signout', clearCookie);
-
 router.use('*', (req, res, next) => {
-  next(new NotFoundError('Страница не найдена'));
+  next(new NotFoundError(PageNotFoundMessage));
 });
 
 module.exports = router;

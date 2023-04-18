@@ -6,11 +6,18 @@ const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
 
+const {
+  UserNotFoundMessage,
+  UserExistsMessage,
+  IncorrectCreateUserMessage,
+  IncorrectUpdateUserMessage,
+} = require('../utils/constants');
+
 const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('Пользователь по указанному _id не найден');
+        throw new NotFoundError(UserNotFoundMessage);
       }
       res.send(user);
     })
@@ -29,13 +36,16 @@ const updateUserInfo = (req, res, next) => {
   )
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('Пользователь с указанным _id не найден');
+        throw new NotFoundError(UserNotFoundMessage);
       }
       res.send(user);
     })
     .catch((err) => {
+      if (err.code === 11000) {
+        return next(new ConflictError(UserExistsMessage));
+      }
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
+        return next(new BadRequestError(IncorrectUpdateUserMessage));
       }
       return next(err);
     });
@@ -57,10 +67,10 @@ const createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.code === 11000) {
-        return next(new ConflictError('Пользователь с таким email уже существует'));
+        return next(new ConflictError(UserExistsMessage));
       }
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+        return next(new BadRequestError(IncorrectCreateUserMessage));
       }
       return next(err);
     });

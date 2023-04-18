@@ -9,13 +9,11 @@ const errorHandler = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { limiter } = require('./middlewares/limiter');
 
-const { PORT, BASE_PATH } = require('./config');
+const { PORT, BASE_PATH, DataBase } = require('./config');
 
 const app = express();
 
 app.use(helmet());
-
-app.use(limiter);
 
 app.use(cookieParser());
 
@@ -23,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
+mongoose.connect(DataBase, {
   useNewUrlParser: true,
 }).then(() => {
   app.listen(PORT, () => {
@@ -35,6 +33,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
 });
 
 app.use(requestLogger);
+
+app.use(limiter);
 
 app.use('/', require('./routes/index'));
 
