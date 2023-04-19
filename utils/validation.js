@@ -18,7 +18,7 @@ const createMovieValidation = celebrate({
     image: Joi.string().required().regex(regexLinkValidation),
     trailerLink: Joi.string().required().regex(regexLinkValidation),
     thumbnail: Joi.string().required().regex(regexLinkValidation),
-    movieId: Joi.number().required().hex(),
+    movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
@@ -26,7 +26,7 @@ const createMovieValidation = celebrate({
 
 const deleteMovieValidation = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.number().required().hex(),
+    movieId: Joi.number().required(),
   }),
 });
 
