@@ -18,7 +18,7 @@ const createMovieValidation = celebrate({
     image: Joi.string().required().regex(regexLinkValidation),
     trailerLink: Joi.string().required().regex(regexLinkValidation),
     thumbnail: Joi.string().required().regex(regexLinkValidation),
-    movieId: Joi.string().required().hex().length(24),
+    movieId: Joi.number().required().hex().length(24),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
@@ -26,7 +26,7 @@ const createMovieValidation = celebrate({
 
 const deleteMovieValidation = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().required().hex().length(24),
+    movieId: Joi.number().required().hex().length(24),
   }),
 });
 
@@ -34,7 +34,7 @@ const createUserValidation = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     name: Joi.string().required().min(2).max(30),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   }),
 });
 
