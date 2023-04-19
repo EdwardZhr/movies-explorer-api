@@ -36,7 +36,7 @@ const createMovie = (req, res, next) => {
 };
 
 const deleteMovie = (req, res, next) => {
-  Movie.findOne({ movieId: req.params.movieId })
+  Movie.findById(req.params.movieId)
     .populate(['owner'])
     .then((movie) => {
       if (!movie) {
