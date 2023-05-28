@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
   origin: 'https://edwardmovies.nomoredomains.monster',
+  credentials: true,
 }));
 mongoose.connect(DataBase, {
   useNewUrlParser: true,
