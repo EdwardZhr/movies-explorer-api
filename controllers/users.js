@@ -87,7 +87,8 @@ const login = (req, res, next) => {
         httpOnly: true,
         sameSite: 'None',
         secure: true,
-      }).end();
+      });
+      res.send({ message: 'Вы успешно авторизовались' });
     })
     .catch(next);
 };
