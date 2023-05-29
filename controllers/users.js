@@ -83,9 +83,9 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res.cookie('jwt', token, {
-        maxAge: 3600000,
+        expires: new Date(Date.now() + 12 * 3600000),
         httpOnly: true,
-        sameSite: 'none',
+        sameSite: 'None',
         secure: true,
       }).end();
     })
