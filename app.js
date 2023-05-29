@@ -20,6 +20,13 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+  req.headers = {
+    authorization: `Bearer ${req.cookies.token}`,
+  };
+  return next();
+});
+
 app.use(cors({
   origin: 'https://edwardmovies.nomoredomains.monster',
   credentials: true,
