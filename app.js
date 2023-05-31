@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-  origin: 'https://edwardmovies.nomoredomains.monster',
+  origin: ['https://edwardmovies.nomoredomains.monster', 'http://localhost:3000'],
   credentials: true,
 }));
 
