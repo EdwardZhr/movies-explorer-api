@@ -96,6 +96,7 @@ const login = (req, res, next) => {
 const clearCookie = (req, res) => {
   res.clearCookie('jwt', {
     sameSite: 'None',
+    secure: true,
   }).end();
 };
 
