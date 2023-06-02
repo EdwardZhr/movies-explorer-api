@@ -25,10 +25,6 @@ app.use(cors({
   credentials: true,
 }));
 
-// {
-//   allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept',
-// }
-
 mongoose.connect(DataBase, {
   useNewUrlParser: true,
 }).then(() => {

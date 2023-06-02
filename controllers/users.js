@@ -94,7 +94,9 @@ const login = (req, res, next) => {
 };
 
 const clearCookie = (req, res) => {
-  res.clearCookie('jwt').end();
+  res.clearCookie('jwt', {
+    sameSite: 'None',
+  }).end();
 };
 
 module.exports = {
